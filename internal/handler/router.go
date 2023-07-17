@@ -22,5 +22,6 @@ func (h *Handler) InitRouter() *gin.Engine {
 	apiV1.GET("/article/:id", h.getArticle)
 	apiV1.GET("/article", h.getAllArticle)
 	apiV1.GET("/article/user/:id", h.getAllArticleByUserID)
+	
 	return router
 }
