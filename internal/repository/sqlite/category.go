@@ -22,6 +22,30 @@ func (s *Sqlite) CreateCategory(ctx context.Context, c *entity.Category) error {
 	return nil
 }
 
+func (s *Sqlite) GetCategory(ctx context.Context, id int64) (*entity.Category, error) {
+	statement, err := s.Sqldb.Prepare("SELECT id, name FROM categories WHERE id = ?")
+	if err != nil {
+		return nil, fmt.Errorf("sqlite select from categories table err: %w", err)
+	}
+	defer statement.Close()
+
+	row, err := statement.Query(id)
+	if err != nil {
+		return nil, fmt.Errorf("sqlite select from categories table err: %w", err)
+	}
+
+	var category entity.Category
+	for row.Next() {
+		err := row.Scan(&category.ID, &category.Name)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return &category, nil
+}
+
+
 func (s *Sqlite) GetAllCategory(ctx context.Context) ([]entity.Category, error) {
 	statement, err := s.Sqldb.Prepare("SELECT id, name FROM categories")
 	if err != nil {
