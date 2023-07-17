@@ -24,6 +24,6 @@ type Repository interface {
 
 	//category
 	CreateCategory(ctx context.Context, c *entity.Category) error
-	GetCategory(ctx context.Context) (entity.Category, error)
+	GetCategory(ctx context.Context) (*entity.Category, error)
 	GetAllCategory(ctx context.Context) ([]entity.Category, error)
 }

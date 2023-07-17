@@ -45,7 +45,6 @@ func (s *Sqlite) GetCategory(ctx context.Context, id int64) (*entity.Category, e
 	return &category, nil
 }
 
-
 func (s *Sqlite) GetAllCategory(ctx context.Context) ([]entity.Category, error) {
 	statement, err := s.Sqldb.Prepare("SELECT id, name FROM categories")
 	if err != nil {
