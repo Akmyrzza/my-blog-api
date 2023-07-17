@@ -105,3 +105,17 @@ func (h *Handler) getArticle(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, a)
 }
+
+func (h *Handler) getAllArticle(ctx *gin.Context) {
+
+	a, err := h.srvs.GetAllArticle(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, &Error{
+			Code:    -2,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, a)
+}

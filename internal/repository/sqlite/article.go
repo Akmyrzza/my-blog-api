@@ -93,7 +93,6 @@ func (s *Sqlite) GetArticle(ctx context.Context, id int64) (*entity.Article, err
 			return nil, err
 		}
 
-		fmt.Println(categoriesJSON)
 		var categories []string
 		err = json.Unmarshal([]byte(categoriesJSON), &categories)
 		if err != nil {
@@ -107,4 +106,43 @@ func (s *Sqlite) GetArticle(ctx context.Context, id int64) (*entity.Article, err
 	}
 
 	return &article, nil
+}
+
+func (s *Sqlite) GetAllArticle(ctx context.Context) ([]entity.Article, error) {
+	statement, err := s.Sqldb.Prepare("SELECT id, title, description, user_id, categories FROM articles")
+	if err != nil {
+		return nil, fmt.Errorf("sqlite select from articles table err: %w", err)
+	}
+	defer statement.Close()
+
+	row, err := statement.Query()
+	if err != nil {
+		return nil, fmt.Errorf("sqlite select from articles table err: %w", err)
+	}
+
+	var articles []entity.Article
+	for row.Next() {
+		var article entity.Article
+		var categoriesJSON string
+
+		err := row.Scan(&article.ID, &article.Title, &article.Description, &article.UserID, &categoriesJSON)
+		if err != nil {
+			return nil, err
+		}
+
+		var categories []string
+		err = json.Unmarshal([]byte(categoriesJSON), &categories)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, v := range categories {
+			val, _ := strconv.Atoi(v)
+			article.Categories = append(article.Categories, val)
+		}
+		
+		articles = append(articles, article)
+	}
+
+	return articles, nil
 }

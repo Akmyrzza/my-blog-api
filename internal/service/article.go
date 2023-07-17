@@ -41,3 +41,12 @@ func (m *Manager) GetArticle(ctx context.Context, id int64) (*entity.Article, er
 
 	return a, nil
 }
+
+func (m *Manager) GetAllArticle(ctx context.Context) ([]entity.Article, error) {
+	a, err := m.Repository.GetAllArticle(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return a, nil
+}

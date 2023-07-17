@@ -19,5 +19,6 @@ func (h *Handler) InitRouter() *gin.Engine {
 	apiV1.PUT("/article/:id", h.updateArticle)
 	apiV1.DELETE("/article/:id", h.deleteArticle)
 	apiV1.GET("/article/:id", h.getArticle)
+	apiV1.GET("/article", h.getAllArticle)
 	return router
 }

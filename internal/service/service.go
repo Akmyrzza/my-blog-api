@@ -18,7 +18,7 @@ type Service interface {
 	UpdateArticle(ctx context.Context, id int64, a *entity.Article) error
 	DeleteArticle(ctx context.Context, id int64) error
 	GetArticle(ctx context.Context, id int64) (*entity.Article, error)
-	//GetAllArticles(ctx context.Context) ([]entity.Article, error)
+	GetAllArticle(ctx context.Context) ([]entity.Article, error)
 	//GetArticlesByUserID(ctx context.Context, userID int64) ([]entity.Article, error)
 	//
 	//category
