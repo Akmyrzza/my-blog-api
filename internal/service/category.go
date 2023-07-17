@@ -24,3 +24,12 @@ func (m *Manager) GetAllCategory(ctx context.Context) ([]entity.Category, error)
 
 	return categories, nil
 }
+
+func (m *Manager) GetCategory(ctx context.Context, id int64) (*entity.Category, error) {
+	user, err := m.Repository.GetCategory(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

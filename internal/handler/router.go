@@ -14,11 +14,13 @@ func (h *Handler) InitRouter() *gin.Engine {
 
 	apiV1.POST("/category", h.createCategory)
 	apiV1.GET("/category", h.getAllCategory)
+	apiV1.GET("/category/:id", h.getCategory)
 
 	apiV1.POST("/article", h.createArticle)
 	apiV1.PUT("/article/:id", h.updateArticle)
 	apiV1.DELETE("/article/:id", h.deleteArticle)
 	apiV1.GET("/article/:id", h.getArticle)
 	apiV1.GET("/article", h.getAllArticle)
+	apiV1.GET("/article/user/:id", h.getAllArticleByUserID)
 	return router
 }

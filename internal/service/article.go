@@ -50,3 +50,12 @@ func (m *Manager) GetAllArticle(ctx context.Context) ([]entity.Article, error) {
 
 	return a, nil
 }
+
+func (m *Manager) GetAllArticleByUserID(ctx context.Context, userID int64) ([]entity.Article, error) {
+	a, err := m.Repository.GetAllArticleByUserID(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return a, nil
+}

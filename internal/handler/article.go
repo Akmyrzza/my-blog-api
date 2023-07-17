@@ -119,3 +119,27 @@ func (h *Handler) getAllArticle(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, a)
 }
+
+func (h *Handler) getAllArticleByUserID(ctx *gin.Context) {
+
+	id := ctx.Param("id")
+	id64, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, &Error{
+			Code:    -2,
+			Message: err.Error(),
+		})
+		return
+	}
+	
+	a, err := h.srvs.GetAllArticleByUserID(ctx, id64)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, &Error{
+			Code:    -2,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, a)
+}

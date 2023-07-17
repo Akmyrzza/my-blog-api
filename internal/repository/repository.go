@@ -20,10 +20,10 @@ type Repository interface {
 	DeleteArticle(ctx context.Context, id int64) error
 	GetArticle(ctx context.Context, id int64) (*entity.Article, error)
 	GetAllArticle(ctx context.Context) ([]entity.Article, error)
-	//GetArticlesByUserID(ctx context.Context, userID int64) ([]entity.Article, error)
+	GetAllArticleByUserID(ctx context.Context, userID int64) ([]entity.Article, error)
 
 	//category
 	CreateCategory(ctx context.Context, c *entity.Category) error
-	GetCategory(ctx context.Context) (*entity.Category, error)
+	GetCategory(ctx context.Context, id int64) (*entity.Category, error)
 	GetAllCategory(ctx context.Context) ([]entity.Category, error)
 }

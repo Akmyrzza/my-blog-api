@@ -3,6 +3,7 @@ package handler
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/Akmyrzza/blog-api/internal/entity"
 	"github.com/gin-gonic/gin"
@@ -45,4 +46,24 @@ func (h *Handler) getAllCategory(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, categories)
+}
+
+func (h *Handler) getCategory(ctx *gin.Context) {
+
+	id := ctx.Param("id")
+	id64, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return 
+	}
+	
+	category, err := h.srvs.GetCategory(ctx, id64)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, &Error{
+			Code:    -2,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, category)
 }
