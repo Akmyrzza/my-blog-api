@@ -9,7 +9,8 @@ import (
 	"github.com/Akmyrzza/blog-api/internal/handler"
 	"github.com/Akmyrzza/blog-api/internal/repository/sqlite"
 	"github.com/Akmyrzza/blog-api/internal/service"
-	httpserver "github.com/Akmyrzza/blog-api/pkg/htttpserver"
+	"github.com/Akmyrzza/blog-api/pkg/httpserver"
+	"github.com/Akmyrzza/blog-api/pkg/jwttoken"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -22,8 +23,9 @@ func Run(cfg *config.Config) error {
 	defer db.Sqldb.Close()
 	log.Println("db connection success")
 
+	token := jwttoken.New(cfg.Token.SecretKey)
 	//service
-	srvs := service.New(db, cfg)
+	srvs := service.New(db, token, cfg)
 	//handler
 	hndlr := handler.New(srvs)
 	//httpserver

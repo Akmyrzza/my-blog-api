@@ -9,6 +9,12 @@ import (
 type Config struct {
 	HTTP ServerConfig `yaml:"http"`
 	DB   DBConfig     `yaml:"db"`
+	Token TokenConfig `yaml:token`
+}
+
+type TokenConfig struct {
+	SecretKey  string        `env:"TOKEN_SECRET_KEY" env-required:"true"`
+	TimeToLive time.Duration `yaml:"time_to_live"`
 }
 
 type ServerConfig struct {
